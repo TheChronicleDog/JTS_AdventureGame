@@ -15,15 +15,23 @@ public class Objects {
     Item heartsKey = new Item("hearts key");
     Item clubsKey = new Item("clubs key");
     Item spadesKey = new Item("spades key");
+    String entranceInfo = "There is an entrance";
+    String lobbyInfo = "There is an lobby";
+    String diamondInfo = "There is an diamond";
+    String heartsInfo = "There is an heart";
+    String clubsInfo = "There is an club";
+    String spadesInfo = "There is an spade";
+    String hallwayInfo = "There is an hallway";
+    String royalFlushInfo = "There is an royal flush";
 
-    Room entranceRoom = new Room("Entrance",guard,null);
-    Room lobbyRoom = new Room("Lobby",null,null);
-    Room diamondRoom = new Room("King Of Diamonds Room",kingDiamonds,null);
-    Room heartsRoom = new Room("Queen of Hearts Room",queenHearts,null);
-    Room clubsRoom = new Room("Jack of Clubs Room",jackClubs,null);
-    Room spadesRoom = new Room("Ace of Spades Room",aceSpades,null);
-    Room hallwayRoom = new Room("Hallway",null,null);
-    Room royalFlushRoom = new Room("???? Room",royalFlush,null);
+    Room entranceRoom = new Room("Entrance",guard,null,entranceInfo);
+    Room lobbyRoom = new Room("Lobby",null,null,lobbyInfo);
+    Room diamondRoom = new Room("King Of Diamonds Room",kingDiamonds,null,diamondInfo);
+    Room heartsRoom = new Room("Queen of Hearts Room",queenHearts,null,heartsInfo);
+    Room clubsRoom = new Room("Jack of Clubs Room",jackClubs,null,clubsInfo);
+    Room spadesRoom = new Room("Ace of Spades Room",aceSpades,null,spadesInfo);
+    Room hallwayRoom = new Room("Hallway",null,null,hallwayInfo);
+    Room royalFlushRoom = new Room(royalFlush.getName()+"'s room",royalFlush,null,royalFlushInfo);
     Room[] roomArray = {entranceRoom,lobbyRoom,diamondRoom,heartsRoom,clubsRoom,spadesRoom,hallwayRoom,royalFlushRoom};
 
     public Room[] getRoomArray() {

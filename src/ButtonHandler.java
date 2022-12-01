@@ -62,6 +62,9 @@ public class ButtonHandler implements ActionListener {
             case "royal flush button":
                 changeLocation(7);
                 break;
+            case "back button":
+                goBack();
+                break;
             default:
                 break;
         }
@@ -88,6 +91,22 @@ public class ButtonHandler implements ActionListener {
         if (screenSet.getCurrentRoom().getEnemy() != null) {
             startFight();
         }
+        else{
+            inspect();
+        }
+    }
+    public void goBack(){
+        screenSet.getScreen("Inspect").setInvisible();
+        screenSet.getScreen("Room").setVisible();
+        refresh();
+    }
+
+    public void inspect() {
+        screenSet.setInspectInfoPanelText(screenSet.getCurrentRoom().getInformation());
+        screenSet.getScreen("Room").setInvisible();
+        screenSet.getScreen("Inspect").setVisible();
+
+        refresh();
     }
 
     public void startFight() {
@@ -113,7 +132,7 @@ public class ButtonHandler implements ActionListener {
             player.setCurrentHealth(player.getHealth());
             screenSet.getCurrentRoom().setEnemy(null);
             screenSet.getScreen("Fight").setInvisible();
-            screenSet.getScreen("Room").setVisible();
+            screenSet.getScreen("Inspect").setVisible();
             Window gameWindow = screenSet.getGameWindow();
             gameWindow.getJFrame().invalidate();
             gameWindow.getJFrame().validate();

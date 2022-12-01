@@ -2,13 +2,15 @@ public class Room {
     String roomName;
     Creature enemy;
     Item item;
+    String information;
     Room(){
-        this("empty",null,null);
+        this("empty",null,null,"empty");
     }
-    Room(String roomName,Creature enemy, Item item){
+    Room(String roomName,Creature enemy, Item item,String information){
         this.roomName = roomName;
         this.enemy = enemy;
         this.item = item;
+        this.information = information;
     }
 
     public void setEnemy(Creature enemy) {
@@ -29,6 +31,10 @@ public class Room {
 
     public Item getItem() {
         return item;
+    }
+
+    public String getInformation() {
+        return information;
     }
 
     public String getRoomName() {
