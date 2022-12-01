@@ -4,9 +4,10 @@ import java.awt.*;
 public class Button {
 
    // Variables
-   static Font titleFont = new Font("Times New Roman", Font.PLAIN, 28);
+   static Font titleFont = new Font("Times New Roman", Font.PLAIN, (int)(28*1.75));
    static Game game;
    int x, y, width, height; // Location, and Dimensions
+   double multiplier = 1.75;
    String buttonName; // Name of Button for Button Handler
    String buttonText; // Text on the Button
    Color bgColor, textColor; // Colors of BackGround and Text
@@ -30,10 +31,10 @@ public class Button {
       this.buttonName = buttonName;
 
       // Providing Size and Location
-      this.x = x;
-      this.y = y;
-      this.width = width;
-      this.height = height;
+      this.x = (int) (x*multiplier);
+      this.y = (int)(y*multiplier);
+      this.width = (int)(width*multiplier);
+      this.height = (int)(height*multiplier);
 
       // Changing button text and colors
       this.bgColor = bgColor;
@@ -100,7 +101,8 @@ public class Button {
       buttonFont = new Font("Times New Roman", Font.PLAIN, fontSize);
       button.setFont(buttonFont);
    }
-/* 
+
+   /*
 Want to make a new Button? Heres How you do it:
 
 For Information on how to create a new Button, Go to the 'Screens' File, Comment At the bottom
@@ -108,5 +110,6 @@ For Information on how to create a new Button, Go to the 'Screens' File, Comment
 For Information on Creating Button Logic (What happens when you Press the button) Go to the 'ButtonHandler' File, Comment At the bottom
 
 */
+
 
 }

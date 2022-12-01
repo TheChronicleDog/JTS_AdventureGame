@@ -3,12 +3,13 @@ import javax.swing.*;
 
 public class Panel {
     int x, y, width, height;
+    double multiplier=1.75;
     Color bgColor, textColor;
     String label;
     JLabel panelLabel;
     Font font;
     JPanel panel;
-    static Font baseFont = new Font("Times New Roman", Font.PLAIN, 28);
+    static Font baseFont = new Font("Times New Roman", Font.PLAIN, (int)(28*1.75));
 
     Panel() {
         this(100, 100, 600, 150, Color.blue, Color.white, "N/A", baseFont);
@@ -23,10 +24,10 @@ public class Panel {
     }
 
     Panel(int x, int y, int width, int height, Color bgColor, Color textColor, String label, Font font) {
-        this.x = x;
-        this.y = y;
-        this.width = width;
-        this.height = height;
+        this.x = (int) (x*multiplier);
+        this.y = (int)(y*multiplier);
+        this.width = (int)(width*multiplier);
+        this.height = (int)(height*multiplier);
         this.bgColor = bgColor;
         this.textColor = textColor;
         this.label = label;
@@ -51,7 +52,6 @@ public class Panel {
     public JPanel getJPanel() {
         return panel;
     }
-
     public void setLabel(String label) {
         panelLabel.setText(label);
     }

@@ -133,7 +133,7 @@ public class ButtonHandler implements ActionListener {
         Creature enemy = screenSet.getCurrentRoom().getEnemy();
         int oldAttackMax = enemy.getAttackMax();
         if (defending){
-            enemy.setAttackMax(oldAttackMax -(oldAttackMax/4));
+            enemy.setAttackMax(1);
         }
         enemy.attackOther(player);
         screenSet.setPlayerHealth("Health : "+player.getCurrentHealth()+"/"+player.getHealth());
