@@ -20,53 +20,23 @@ public class ButtonHandler implements ActionListener {
 
     public void chooseAction() {
         switch (this.buttonName) {
-            case "start button":
-                startGame();
-                break;
-            case "test button":
-                testGame();
-                break;
-            case "inspect button":
-                checkForEnemy();
-                break;
-            case "move button":
-                openMap();
-                break;
-            case "attack button":
-                playerAttack();
-                break;
-            case "defend button":
-                playerDefend();
-                break;
-            case "entrance button":
-                changeLocation(0);
-                break;
-            case "lobby button":
-                changeLocation(1);
-                break;
-            case "diamond button":
-                changeLocation(2);
-                break;
-            case "hearts button":
-                changeLocation(3);
-                break;
-            case "clubs button":
-                changeLocation(4);
-                break;
-            case "spades button":
-                changeLocation(5);
-                break;
-            case "hall button":
-                changeLocation(6);
-                break;
-            case "royal flush button":
-                changeLocation(7);
-                break;
-            case "back button":
-                goBack();
-                break;
-            default:
-                break;
+            case "start button" -> startGame();
+            case "test button" -> testGame();
+            case "inspect button" -> checkForEnemy();
+            case "move button" -> openMap();
+            case "attack button" -> playerAttack();
+            case "defend button" -> playerDefend();
+            case "entrance button" -> changeLocation(0);
+            case "lobby button" -> changeLocation(1);
+            case "diamond button" -> changeLocation(2);
+            case "hearts button" -> changeLocation(3);
+            case "clubs button" -> changeLocation(4);
+            case "spades button" -> changeLocation(5);
+            case "hall button" -> changeLocation(6);
+            case "royal flush button" -> changeLocation(7);
+            case "back button" -> goBack();
+            default -> {
+            }
         }
     }
 
@@ -112,6 +82,7 @@ public class ButtonHandler implements ActionListener {
     public void startFight() {
         Creature player = screenSet.objects.getPlayer();
         Creature enemy = screenSet.getCurrentRoom().getEnemy();
+        screenSet.setPlayerHealth("Health : "+player.getCurrentHealth()+"/"+player.getHealth());
         String enemyName = screenSet.getCurrentRoom().getEnemy().getName();
         screenSet.setEnemyName(enemyName);
         screenSet.getScreen("Room").setInvisible();
@@ -129,12 +100,11 @@ public class ButtonHandler implements ActionListener {
         Creature enemy = screenSet.getCurrentRoom().getEnemy();
         player.attackOther(enemy);
         if (enemy.getCurrentHealth() <= 0){
-            player.setCurrentHealth(player.getHealth());
-
             screenSet.setInspectInfoPanelText(screenSet.getCurrentRoom().getInformation());
             screenSet.getScreen("Fight").setInvisible();
             screenSet.getScreen("Inspect").setVisible();
             enemyReward();
+            player.setCurrentHealth(player.getHealth());
             screenSet.getCurrentRoom().setEnemy(null);
             refresh();
         }
@@ -144,12 +114,11 @@ public class ButtonHandler implements ActionListener {
     }
     public void enemyReward(){
         String enemyName = screenSet.getCurrentRoom().getEnemy().getName();
-        switch (enemyName){
-            case "?????":
-            case "Royal Flush":
+        switch (enemyName) {
+            case "?????", "Royal Flush" -> {
                 screenSet.getScreen("Inspect").setInvisible();
                 screenSet.getScreen("Win").setVisible();
-                break;
+            }
         }
         if (screenSet.getCurrentRoom().getItem() != null){
             screenSet.objects.getPlayer().equip(screenSet.getCurrentRoom().getItem());
