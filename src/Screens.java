@@ -41,7 +41,7 @@ public class Screens {
         // Game Over Screen
         Screen gameOverScreen = new Screen(gameWindow);
 
-        Panel gameOverPanel = new Panel(100, 100, 600, 150, Color.black, Color.white, "Game Over", titleFont);
+        Panel gameOverPanel = new Panel(100, 100, 600, 150, Color.black, Color.white, "Game Over\nYou died!", titleFont);
         //Button gameOverButton = new Button("game over button", 300, 400, 200, 100, "Restart?", Color.black, Color.white,normalFont, this, gameWindow);
 
         gameOverScreen.add(gameOverPanel);
@@ -49,6 +49,16 @@ public class Screens {
         add(gameOverScreen);
 
         screenMap.put("Gameover", gameOverScreen);
+        // Game Over Screen
+        Screen winScreen = new Screen(gameWindow);
+
+        Panel winPanel = new Panel(100, 100, 600, 150, Color.black, Color.white, "Game Over\nYou Win!", titleFont);
+
+        winScreen.add(winPanel);
+        //gameOverScreen.add(gameOverButton);
+        add(winScreen);
+
+        screenMap.put("Win", winScreen);
 
 
         // Test Screen

@@ -11,10 +11,10 @@ public class Objects {
 
     Creature player = new Creature("Player",50,15,5,20,50); //End Stats become H: 100, A: 30 D:15, S:40, L: 80
 
-    Item diamondKey = new Item("diamond key");
-    Item heartsKey = new Item("hearts key");
-    Item clubsKey = new Item("clubs key");
-    Item spadesKey = new Item("spades key");
+    Item diamondBoots= new Item("diamond boots",0,0,0,20,10,false);
+    Item heartsArmor = new Item("hearts armor",25,0,5,0,10,false);
+    Item clubsClub = new Item("clubs club",0,15,0,0,10,false);
+    Item spadesShield = new Item("spades shield",25,0,5,0,0,false);
     String entranceInfo = "There is an entrance";
     String lobbyInfo = "There is an lobby";
     String diamondInfo = "There is an diamond";
@@ -26,10 +26,10 @@ public class Objects {
 
     Room entranceRoom = new Room("Entrance",guard,null,entranceInfo);
     Room lobbyRoom = new Room("Lobby",null,null,lobbyInfo);
-    Room diamondRoom = new Room("King Of Diamonds Room",kingDiamonds,null,diamondInfo);
-    Room heartsRoom = new Room("Queen of Hearts Room",queenHearts,null,heartsInfo);
-    Room clubsRoom = new Room("Jack of Clubs Room",jackClubs,null,clubsInfo);
-    Room spadesRoom = new Room("Ace of Spades Room",aceSpades,null,spadesInfo);
+    Room diamondRoom = new Room("King Of Diamonds Room",kingDiamonds,diamondBoots,diamondInfo);
+    Room heartsRoom = new Room("Queen of Hearts Room",queenHearts,heartsArmor,heartsInfo);
+    Room clubsRoom = new Room("Jack of Clubs Room",jackClubs,clubsClub,clubsInfo);
+    Room spadesRoom = new Room("Ace of Spades Room",aceSpades,spadesShield,spadesInfo);
     Room hallwayRoom = new Room("Hallway",null,null,hallwayInfo);
     Room royalFlushRoom = new Room(royalFlush.getName()+"'s room",royalFlush,null,royalFlushInfo);
     Room[] roomArray = {entranceRoom,lobbyRoom,diamondRoom,heartsRoom,clubsRoom,spadesRoom,hallwayRoom,royalFlushRoom};

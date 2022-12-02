@@ -130,17 +130,29 @@ public class ButtonHandler implements ActionListener {
         player.attackOther(enemy);
         if (enemy.getCurrentHealth() <= 0){
             player.setCurrentHealth(player.getHealth());
-            screenSet.getCurrentRoom().setEnemy(null);
+
             screenSet.setInspectInfoPanelText(screenSet.getCurrentRoom().getInformation());
             screenSet.getScreen("Fight").setInvisible();
             screenSet.getScreen("Inspect").setVisible();
-            Window gameWindow = screenSet.getGameWindow();
-            gameWindow.getJFrame().invalidate();
-            gameWindow.getJFrame().validate();
-            gameWindow.getJFrame().repaint();
+            enemyReward();
+            screenSet.getCurrentRoom().setEnemy(null);
+            refresh();
         }
         else {
             enemyTurn();
+        }
+    }
+    public void enemyReward(){
+        String enemyName = screenSet.getCurrentRoom().getEnemy().getName();
+        switch (enemyName){
+            case "?????":
+            case "Royal Flush":
+                screenSet.getScreen("Inspect").setInvisible();
+                screenSet.getScreen("Win").setVisible();
+                break;
+        }
+        if (screenSet.getCurrentRoom().getItem() != null){
+            screenSet.objects.getPlayer().equip(screenSet.getCurrentRoom().getItem());
         }
     }
 
