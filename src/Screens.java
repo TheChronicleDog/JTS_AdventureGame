@@ -106,11 +106,12 @@ public class Screens {
         screenMap.put("Fight", fightScreen);
         //Inspect Screen
         Screen inspectScreen = new Screen(gameWindow);
-        Panel inspectPanel = new Panel(30, 70, 730, 330, Color.blue);
-        inspectInfoPanel = new Panel(30, 420, 730, 200, Color.blue,Color.white,"Filler, replace with info text");
-        Button backButton = new Button("back button", 400, 750, 360, 200, "Back", Color.black, Color.white,
+        //Panel inspectPanel = new Panel(30, 70, 730, 330, Color.blue);
+        inspectInfoPanel = new Panel(30, 70, 730, 330, Color.blue,Color.white,"Filler, replace with info text");
+        Button backButton = new Button("back button", 200, 430, 360, 200, "Back", Color.black, Color.white,
                 normalFont, this, gameWindow);
-        inspectScreen.add(inspectPanel);
+        backButton.setFontSize(120);
+        //inspectScreen.add(inspectPanel);
         inspectScreen.add(inspectInfoPanel);
         inspectScreen.add(backButton);
 

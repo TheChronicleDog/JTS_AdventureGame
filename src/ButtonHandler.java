@@ -131,6 +131,7 @@ public class ButtonHandler implements ActionListener {
         if (enemy.getCurrentHealth() <= 0){
             player.setCurrentHealth(player.getHealth());
             screenSet.getCurrentRoom().setEnemy(null);
+            screenSet.setInspectInfoPanelText(screenSet.getCurrentRoom().getInformation());
             screenSet.getScreen("Fight").setInvisible();
             screenSet.getScreen("Inspect").setVisible();
             Window gameWindow = screenSet.getGameWindow();
