@@ -1,6 +1,7 @@
 
 //Imports
 
+import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
 
@@ -11,10 +12,10 @@ public class Screens {
     Room currentRoom = objects.getRoomArray()[0];
 
     // Fonts
-    static Font titleFont = new Font("Times New Roman", Font.PLAIN, 70);
-    static Font normalFont = new Font("Times New Roman", Font.PLAIN, 20);
+    static Font titleFont = new Font("Times New Roman", Font.PLAIN, 120);
+    static Font normalFont = new Font("Times New Roman", Font.PLAIN, (int)(20*1.75));
     HashMap<String, Screen> screenMap = new HashMap<>();
-    Panel locationName, enemyName, playerHealth;
+    Panel locationName, enemyName, playerHealth,inspectInfoPanel;
 
     Screens(Container con, Window gameWindow) {
 
@@ -25,9 +26,12 @@ public class Screens {
         // Title Screen
         Screen titleScreen = new Screen(gameWindow);
 
-        Panel titlePanel = new Panel(100, 100, 600, 150, Color.black, Color.white, "Heart of the Cards", titleFont);
+        Panel titlePanel = new Panel(0, 100, 800, 300, Color.black, Color.white, "Heart of the Cards", titleFont);
+
         Button startButton = new Button("start button", 300, 400, 200, 100, "START", Color.black, Color.white,
                 normalFont, this, gameWindow);
+
+        startButton.setFontSize(90);
 
         titleScreen.add(titlePanel);
         titleScreen.add(startButton);
@@ -68,7 +72,7 @@ public class Screens {
         Button moveButton = new Button("move button", 425, 420, 300, 200, "Move", Color.black, Color.white,
                 normalFont, this, gameWindow);
         locationName = new Panel(30, 10, 730, 50, Color.black, Color.white, "Location", normalFont);
-        int roomFontSize = 80;
+        int roomFontSize = (int)(80*1.75);
         inspectButton.setFontSize(roomFontSize);
         moveButton.setFontSize(roomFontSize);
 
@@ -81,13 +85,14 @@ public class Screens {
         screenMap.put("Room", roomScreen);
         //Fight Screen
         Screen fightScreen = new Screen(gameWindow);
-        enemyName = new Panel(30, 10, 730, 50, Color.black, Color.white, "enemy", normalFont);
-        playerHealth = new Panel(30, 400, 730, 50, Color.black, Color.white, "Health : "+objects.getPlayer().getCurrentHealth()+"/"+objects.getPlayer().getHealth(), normalFont);
         Panel enemyPanel = new Panel(30, 70, 730, 330, Color.blue);
         Button attackButton = new Button("attack button", 55, 445, 360, 200, "Attack", Color.black, Color.white,
                 normalFont, this, gameWindow);
         Button defendButton = new Button("defend button", 425, 445, 300, 200, "Defend", Color.black, Color.white,
                 normalFont, this, gameWindow);
+        enemyName = new Panel(30, 10, 730, 50, Color.black, Color.white, "enemy", normalFont);
+        playerHealth = new Panel(30, 400, 730, 40, Color.black, Color.white, "Health : "+objects.getPlayer().getCurrentHealth()+"/"+objects.getPlayer().getHealth(), normalFont);
+
 
         attackButton.setFontSize(roomFontSize);
         defendButton.setFontSize(roomFontSize);
@@ -99,18 +104,39 @@ public class Screens {
         add(fightScreen);
 
         screenMap.put("Fight", fightScreen);
+        //Inspect Screen
+        Screen inspectScreen = new Screen(gameWindow);
+        Panel inspectPanel = new Panel(30, 70, 730, 330, Color.blue);
+        inspectInfoPanel = new Panel(30, 420, 730, 200, Color.blue,Color.white,"Filler, replace with info text");
+        Button backButton = new Button("back button", 400, 750, 360, 200, "Back", Color.black, Color.white,
+                normalFont, this, gameWindow);
+        inspectScreen.add(inspectPanel);
+        inspectScreen.add(inspectInfoPanel);
+        inspectScreen.add(backButton);
+
+        add(inspectScreen);
+        screenMap.put("Inspect",inspectScreen);
         //Map Screen
         Screen mapScreen = new Screen(gameWindow);
 
-        Button entranceButton = new Button("entrance button", 10, 10, 100, 50, "Entrance", Color.black, Color.white, normalFont, this, gameWindow);
-        Button lobbyButton = new Button("lobby button", 120, 10, 100, 50, "Lobby", Color.black, Color.white, normalFont, this, gameWindow);
-        Button diamondButton = new Button("diamond button", 10, 70, 100, 50, "King of Diamonds Room", Color.black, Color.white, normalFont, this, gameWindow);
-        Button heartsButton = new Button("hearts button", 120, 70, 100, 50, "Queen of Hearts Room", Color.black, Color.white, normalFont, this, gameWindow);
-        Button clubsButton = new Button("clubs button", 10, 130, 100, 50, "Jack of Clubs Room", Color.black, Color.white, normalFont, this, gameWindow);
-        Button spadesButton = new Button("spades button", 120, 130, 100, 50, "Ace of Spades Room", Color.black, Color.white, normalFont, this, gameWindow);
-        Button hallButton = new Button("hall button", 10, 190, 100, 50, "Hallway", Color.black, Color.white, normalFont, this, gameWindow);
-        Button royalFlushButton = new Button("royal flush button", 120, 190, 100, 50, "???? Room", Color.black, Color.white, normalFont, this, gameWindow);
+        Button entranceButton = new Button("entrance button", 100, 10, 300, 100, "Entrance", Color.black, Color.white, normalFont, this, gameWindow);
+        Button lobbyButton = new Button("lobby button", 409, 10, 300, 100, "Lobby", Color.black, Color.white, normalFont, this, gameWindow);
+        Button diamondButton = new Button("diamond button", 100, 130, 300, 100, "King of Diamonds", Color.black, Color.white, normalFont, this, gameWindow);
+        Button heartsButton = new Button("hearts button", 409, 130, 300, 100, "Queen of Hearts", Color.black, Color.white, normalFont, this, gameWindow);
+        Button clubsButton = new Button("clubs button", 100, 250, 300, 100, "Jack of Clubs", Color.black, Color.white, normalFont, this, gameWindow);
+        Button spadesButton = new Button("spades button", 409, 250, 300, 100, "Ace of Spades", Color.black, Color.white, normalFont, this, gameWindow);
+        Button hallButton = new Button("hall button", 100, 370, 300, 100, "Hallway", Color.black, Color.white, normalFont, this, gameWindow);
+        Button royalFlushButton = new Button("royal flush button", 409, 370, 300, 100, "???? Room", Color.black, Color.white, normalFont, this, gameWindow);
 
+        int mapFont = 50;
+        entranceButton.setFontSize(100);
+        lobbyButton.setFontSize(100);
+        diamondButton.setFontSize(mapFont);
+        heartsButton.setFontSize(mapFont);
+        clubsButton.setFontSize(mapFont);
+        spadesButton.setFontSize(mapFont);
+        hallButton.setFontSize(mapFont);
+        royalFlushButton.setFontSize(mapFont);
         mapScreen.add(entranceButton);
         mapScreen.add(lobbyButton);
         mapScreen.add(diamondButton);
@@ -158,7 +184,12 @@ public class Screens {
     public Window getGameWindow() {
         return gameWindow;
     }
+
+    public void setInspectInfoPanelText(String text) {
+        inspectInfoPanel.setLabel(text);
+    }
 }
+
 /*
  * -Creating a New Screen (Panels and Buttons Included)-
  *
