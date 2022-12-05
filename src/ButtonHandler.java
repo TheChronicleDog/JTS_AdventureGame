@@ -1,5 +1,9 @@
+import javax.sound.sampled.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
 public class ButtonHandler implements ActionListener {
     // Variables
@@ -133,10 +137,39 @@ public class ButtonHandler implements ActionListener {
         Creature player = screenSet.objects.getPlayer();
         Creature enemy = screenSet.getCurrentRoom().getEnemy();
         int oldAttackMax = enemy.getAttackMax();
+        int playerOldHealth = player.getCurrentHealth();
+        Clip clip;
         if (defending){
             enemy.setAttackMax(1);
         }
         enemy.attackOther(player);
+
+        if (playerOldHealth != player.getCurrentHealth())
+        {
+            File damageSound = new File(System.getProperty("user.dir")+"\\src\\damageEffect.wav");
+            AudioInputStream damageStream;
+            {
+                try {
+                    damageStream = AudioSystem.getAudioInputStream(damageSound);
+                } catch (UnsupportedAudioFileException | IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            try {
+                clip = AudioSystem.getClip();
+            } catch (LineUnavailableException e) {
+                throw new RuntimeException(e);
+            }
+            try {
+                clip.flush();
+                clip.setFramePosition(0);
+                clip.open(damageStream);
+                clip.start();
+            } catch (LineUnavailableException | IOException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
         screenSet.setPlayerHealth("Health : "+player.getCurrentHealth()+"/"+player.getHealth());
         enemy.setAttackMax(oldAttackMax);
         defending = false;

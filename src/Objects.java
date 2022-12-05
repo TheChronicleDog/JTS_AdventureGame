@@ -1,3 +1,8 @@
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.UnsupportedAudioFileException;
+import java.io.File;
+import java.io.IOException;
 import java.util.HashMap;
 
 
@@ -33,6 +38,17 @@ public class Objects {
     Room hallwayRoom = new Room("Hallway",null,null,hallwayInfo);
     Room royalFlushRoom = new Room(royalFlush.getName()+"'s room",royalFlush,null,royalFlushInfo);
     Room[] roomArray = {entranceRoom,lobbyRoom,diamondRoom,heartsRoom,clubsRoom,spadesRoom,hallwayRoom,royalFlushRoom};
+
+    File damageSound = new File(System.getProperty("user.dir")+"\\src\\damageEffect.wav");
+    AudioInputStream damageStream;
+
+    {
+        try {
+            damageStream = AudioSystem.getAudioInputStream(damageSound);
+        } catch (UnsupportedAudioFileException | IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     public Room[] getRoomArray() {
         return roomArray;
