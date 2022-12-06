@@ -29,25 +29,25 @@ public class Objects {
     String hallwayInfo = "There is an hallway";
     String royalFlushInfo = "There is an royal flush";
 
-    Room entranceRoom = new Room("Entrance",guard,null,entranceInfo);
-    Room lobbyRoom = new Room("Lobby",null,null,lobbyInfo);
-    Room diamondRoom = new Room("King Of Diamonds Room",kingDiamonds,diamondBoots,diamondInfo);
-    Room heartsRoom = new Room("Queen of Hearts Room",queenHearts,heartsArmor,heartsInfo);
-    Room clubsRoom = new Room("Jack of Clubs Room",jackClubs,clubsClub,clubsInfo);
-    Room spadesRoom = new Room("Ace of Spades Room",aceSpades,spadesShield,spadesInfo);
-    Room hallwayRoom = new Room("Hallway",null,null,hallwayInfo);
-    Room royalFlushRoom = new Room(royalFlush.getName()+"'s room",royalFlush,null,royalFlushInfo);
+    File hallway= new File(System.getProperty("user.dir")+"\\src\\hallway.wav");
+    File victory= new File(System.getProperty("user.dir")+"\\src\\victory.wav");
+    File kingRoom= new File(System.getProperty("user.dir")+"\\src\\kingRoom.wav");
+    File queenRoom= new File(System.getProperty("user.dir")+"\\src\\queenRoom.wav");
+    File jackRoom= new File(System.getProperty("user.dir")+"\\src\\jackRoom.wav");
+    File finalBattle= new File(System.getProperty("user.dir")+"\\src\\finalBattle.wav");
+
+    Room entranceRoom = new Room("Entrance",guard,null,entranceInfo,null);
+    Room lobbyRoom = new Room("Lobby",null,null,lobbyInfo,null);
+    Room diamondRoom = new Room("King Of Diamonds Room",kingDiamonds,diamondBoots,diamondInfo,kingRoom);
+    Room heartsRoom = new Room("Queen of Hearts Room",queenHearts,heartsArmor,heartsInfo,queenRoom);
+    Room clubsRoom = new Room("Jack of Clubs Room",jackClubs,clubsClub,clubsInfo,jackRoom);
+    Room spadesRoom = new Room("Ace of Spades Room",aceSpades,spadesShield,spadesInfo,jackRoom);
+    Room hallwayRoom = new Room("Hallway",null,null,hallwayInfo,hallway);
+    Room royalFlushRoom = new Room(royalFlush.getName()+"'s room",royalFlush,null,royalFlushInfo,finalBattle);
     Room[] roomArray = {entranceRoom,lobbyRoom,diamondRoom,heartsRoom,clubsRoom,spadesRoom,hallwayRoom,royalFlushRoom};
 
-    File damageSound = new File(System.getProperty("user.dir")+"\\src\\damageEffect.wav");
-    AudioInputStream damageStream;
-
-    {
-        try {
-            damageStream = AudioSystem.getAudioInputStream(damageSound);
-        } catch (UnsupportedAudioFileException | IOException e) {
-            throw new RuntimeException(e);
-        }
+    public File getVictory() {
+        return victory;
     }
 
     public Room[] getRoomArray() {

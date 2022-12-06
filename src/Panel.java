@@ -9,7 +9,7 @@ public class Panel {
     JLabel panelLabel;
     Font font;
     JPanel panel;
-    static Font baseFont = new Font("Times New Roman", Font.PLAIN, (int)(28*1.75));
+    static Font baseFont = new Font("Times New Roman", Font.PLAIN, (int)(28));
 
     Panel() {
         this(100, 100, 600, 150, Color.blue, Color.white, "N/A", baseFont);

@@ -1,16 +1,20 @@
+import java.io.File;
+
 public class Room {
     String roomName;
     Creature enemy;
     Item item;
     String information;
+    File music;
     Room(){
-        this("empty",null,null,"empty");
+        this("empty",null,null,"empty",null);
     }
-    Room(String roomName,Creature enemy, Item item,String information){
+    Room(String roomName,Creature enemy, Item item,String information, File music){
         this.roomName = roomName;
         this.enemy = enemy;
         this.item = item;
         this.information = information;
+        this.music = music;
     }
 
     public void setEnemy(Creature enemy) {
@@ -40,5 +44,10 @@ public class Room {
     public String getRoomName() {
         return roomName;
     }
+
+    public File getMusic() {
+        return music;
+    }
 }
+
 

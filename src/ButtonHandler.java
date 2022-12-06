@@ -3,7 +3,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.io.IOException;
-import java.util.concurrent.TimeUnit;
 
 public class ButtonHandler implements ActionListener {
     // Variables
@@ -11,6 +10,12 @@ public class ButtonHandler implements ActionListener {
     Window gameWindow;
     String buttonName;
     boolean defending = false;
+    File music;
+    Clip musicClip;
+
+    File musicFile;
+    AudioInputStream musicStream;
+
 
     ButtonHandler(String buttonName, Screens screenSet, Window gameWindow) {
         this.buttonName = buttonName;
@@ -64,12 +69,12 @@ public class ButtonHandler implements ActionListener {
     public void checkForEnemy() {
         if (screenSet.getCurrentRoom().getEnemy() != null) {
             startFight();
-        }
-        else{
+        } else {
             inspect();
         }
     }
-    public void goBack(){
+
+    public void goBack() {
         screenSet.getScreen("Inspect").setInvisible();
         screenSet.getScreen("Room").setVisible();
         refresh();
@@ -86,7 +91,7 @@ public class ButtonHandler implements ActionListener {
     public void startFight() {
         Creature player = screenSet.objects.getPlayer();
         Creature enemy = screenSet.getCurrentRoom().getEnemy();
-        screenSet.setPlayerHealth("Health : "+player.getCurrentHealth()+"/"+player.getHealth());
+        screenSet.setPlayerHealth("Health : " + player.getCurrentHealth() + "/" + player.getHealth());
         String enemyName = screenSet.getCurrentRoom().getEnemy().getName();
         screenSet.setEnemyName(enemyName);
         screenSet.getScreen("Room").setInvisible();
@@ -94,7 +99,7 @@ public class ButtonHandler implements ActionListener {
         refresh();
         int playerSpeed = player.getSpeed();
         int enemySpeed = enemy.getSpeed();
-        if (enemySpeed > playerSpeed){
+        if (enemySpeed > playerSpeed) {
             enemyTurn();
         }
     }
@@ -103,7 +108,7 @@ public class ButtonHandler implements ActionListener {
         Creature player = screenSet.objects.getPlayer();
         Creature enemy = screenSet.getCurrentRoom().getEnemy();
         player.attackOther(enemy);
-        if (enemy.getCurrentHealth() <= 0){
+        if (enemy.getCurrentHealth() <= 0) {
             screenSet.setInspectInfoPanelText(screenSet.getCurrentRoom().getInformation());
             screenSet.getScreen("Fight").setInvisible();
             screenSet.getScreen("Inspect").setVisible();
@@ -111,12 +116,12 @@ public class ButtonHandler implements ActionListener {
             player.setCurrentHealth(player.getHealth());
             screenSet.getCurrentRoom().setEnemy(null);
             refresh();
-        }
-        else {
+        } else {
             enemyTurn();
         }
     }
-    public void enemyReward(){
+
+    public void enemyReward() {
         String enemyName = screenSet.getCurrentRoom().getEnemy().getName();
         switch (enemyName) {
             case "?????", "Royal Flush" -> {
@@ -124,7 +129,7 @@ public class ButtonHandler implements ActionListener {
                 screenSet.getScreen("Win").setVisible();
             }
         }
-        if (screenSet.getCurrentRoom().getItem() != null){
+        if (screenSet.getCurrentRoom().getItem() != null) {
             screenSet.objects.getPlayer().equip(screenSet.getCurrentRoom().getItem());
         }
     }
@@ -133,20 +138,20 @@ public class ButtonHandler implements ActionListener {
         defending = true;
         enemyTurn();
     }
-    public void enemyTurn(){
+
+    public void enemyTurn() {
         Creature player = screenSet.objects.getPlayer();
         Creature enemy = screenSet.getCurrentRoom().getEnemy();
         int oldAttackMax = enemy.getAttackMax();
         int playerOldHealth = player.getCurrentHealth();
-        Clip clip;
-        if (defending){
+        Clip clip = null;
+        if (defending) {
             enemy.setAttackMax(1);
         }
         enemy.attackOther(player);
 
-        if (playerOldHealth != player.getCurrentHealth())
-        {
-            File damageSound = new File(System.getProperty("user.dir")+"\\src\\damageEffect.wav");
+        if (playerOldHealth != player.getCurrentHealth()) {
+            File damageSound = new File(System.getProperty("user.dir") + "\\src\\damageEffect.wav");
             AudioInputStream damageStream;
             {
                 try {
@@ -170,32 +175,73 @@ public class ButtonHandler implements ActionListener {
             }
 
         }
-        screenSet.setPlayerHealth("Health : "+player.getCurrentHealth()+"/"+player.getHealth());
+        screenSet.setPlayerHealth("Health : " + player.getCurrentHealth() + "/" + player.getHealth());
         enemy.setAttackMax(oldAttackMax);
         defending = false;
-        if(!(player.getCurrentHealth() > 0)){
+        if (!(player.getCurrentHealth() > 0)) {
             screenSet.getScreen("Fight").setInvisible();
             screenSet.getScreen("Gameover").setVisible();
             refresh();
             player.setCurrentHealth(player.getHealth());
             enemy.setCurrentHealth(enemy.getHealth());
+            if (clip != null) {
+                clip.stop();
+            }
+
         }
 
     }
 
     public void openMap() {
+        try {
+            musicClip.stop();
+            musicStream.close();
+            musicClip.flush();
+            musicClip.close();
+
+        } catch (NullPointerException e) {
+            System.out.print("There is no music playing\n");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         screenSet.getScreen("Room").setInvisible();
         screenSet.getScreen("Map").setVisible();
         refresh();
+
     }
 
     public void changeLocation(int roomNumber) {
+
+
         screenSet.setCurrentRoom(screenSet.getObjects().getRoomArray()[roomNumber]);
         String locationName = screenSet.getCurrentRoom().getRoomName();
         screenSet.changeLocationName(locationName);
         screenSet.getScreen("Map").setInvisible();
         screenSet.getScreen("Room").setVisible();
         refresh();
+
+        File music = screenSet.getCurrentRoom().getMusic();
+        {
+            try {
+                musicStream = AudioSystem.getAudioInputStream(music);
+            } catch (UnsupportedAudioFileException | IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+
+        try {
+            musicClip = AudioSystem.getClip();
+        } catch (LineUnavailableException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            musicClip.flush();
+            musicClip.setFramePosition(0);
+            musicClip.open(musicStream);
+            musicClip.start();
+        } catch (LineUnavailableException | IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     // Refreshing the Screen after any changes
