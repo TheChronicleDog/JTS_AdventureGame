@@ -1,7 +1,7 @@
 
 //Imports
 
-import javax.swing.*;
+
 import java.awt.*;
 import java.io.IOException;
 import java.util.HashMap;
@@ -44,21 +44,19 @@ public class Screens {
         // Game Over Screen
         Screen gameOverScreen = new Screen(gameWindow);
 
-        Panel gameOverPanel = new Panel(100, 100, 600, 150, Color.black, Color.white, "Game Over\nYou died!", titleFont);
-        //Button gameOverButton = new Button("game over button", 300, 400, 200, 100, "Restart?", Color.black, Color.white,normalFont, this, gameWindow);
+        Panel gameOverPanel = new Panel(100, 100, 600, 150, Color.black, Color.white, "Game Over!", titleFont);
 
         gameOverScreen.add(gameOverPanel);
-        //gameOverScreen.add(gameOverButton);
         add(gameOverScreen);
 
         screenMap.put("Gameover", gameOverScreen);
-        // Game Over Screen
+        // Win Screen
         Screen winScreen = new Screen(gameWindow);
 
         Panel winPanel = new Panel(100, 100, 600, 150, Color.black, Color.white, "Game Over\nYou Win!", titleFont);
 
         winScreen.add(winPanel);
-        //gameOverScreen.add(gameOverButton);
+
         add(winScreen);
 
         screenMap.put("Win", winScreen);
@@ -197,9 +195,6 @@ public class Screens {
         playerHealth.setLabel(playerHealthString);
     }
 
-    public Window getGameWindow() {
-        return gameWindow;
-    }
 
     public void setInspectInfoPanelText(String text) {
         inspectInfoPanel.setLabel(text);

@@ -1,4 +1,8 @@
 import javax.imageio.ImageIO;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -8,8 +12,8 @@ public class Room {
     Creature enemy;
     Item item;
     String information;
-    File music;
     BufferedImage image;
+    Clip musicClip;
     Room() throws IOException {
         this("empty",null,null,"empty",null,null);
     }
@@ -18,7 +22,14 @@ public class Room {
         this.enemy = enemy;
         this.item = item;
         this.information = information;
-        this.music = music;
+        if(music != null) {
+            try {
+                musicClip = AudioSystem.getClip();
+                musicClip.open(AudioSystem.getAudioInputStream(music));
+            } catch (UnsupportedAudioFileException | LineUnavailableException e) {
+                throw new RuntimeException(e);
+            }
+        }
         if(imageFile != null) {
             image = ImageIO.read(imageFile);
         }
@@ -52,8 +63,8 @@ public class Room {
         return roomName;
     }
 
-    public File getMusic() {
-        return music;
+    public Clip getMusicClip() {
+        return musicClip;
     }
 
     public BufferedImage getImage() {

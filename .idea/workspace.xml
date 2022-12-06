@@ -4,11 +4,9 @@
     <option name="SCOPE_TYPE" value="3" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7ea5bbc5-d081-4d34-9949-4afafee78240" name="Changes" comment="Audio bug -_-">
+    <list default="true" id="7ea5bbc5-d081-4d34-9949-4afafee78240" name="Changes" comment="GAME IS FINISHED, Audio, visuals, code, fights, and everything else are DONE!">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/ButtonHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ButtonHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Creature.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Creature.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Game.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Objects.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Objects.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Room.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Screens.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Screens.java" afterDir="false" />
@@ -147,7 +145,14 @@
       <option name="project" value="LOCAL" />
       <updated>1670301120152</updated>
     </task>
-    <option name="localTasksCounter" value="12" />
+    <task id="LOCAL-00012" summary="Added Images, Audio Bug Persists">
+      <created>1670356853509</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1670356853509</updated>
+    </task>
+    <option name="localTasksCounter" value="13" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -168,21 +173,8 @@
     <MESSAGE value="Finalizing Code, Ready for images" />
     <MESSAGE value="Adding audio" />
     <MESSAGE value="Audio bug -_-" />
-    <option name="LAST_COMMIT_MESSAGE" value="Audio bug -_-" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/ButtonHandler.java</url>
-          <line>18</line>
-          <properties class="ButtonHandler" method="&lt;init&gt;">
-            <option name="EMULATED" value="true" />
-            <option name="WATCH_EXIT" value="false" />
-          </properties>
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
+    <MESSAGE value="Added Images, Audio Bug Persists" />
+    <MESSAGE value="GAME IS FINISHED, Audio, visuals, code, fights, and everything else are DONE!" />
+    <option name="LAST_COMMIT_MESSAGE" value="GAME IS FINISHED, Audio, visuals, code, fights, and everything else are DONE!" />
   </component>
 </project>
