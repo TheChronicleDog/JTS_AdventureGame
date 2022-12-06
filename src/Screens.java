@@ -3,6 +3,7 @@
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.IOException;
 import java.util.HashMap;
 
 public class Screens {
@@ -10,6 +11,8 @@ public class Screens {
     Objects objects = new Objects();
     Window gameWindow;
     Room currentRoom = objects.getRoomArray()[0];
+    Panel locationPanel;
+    Panel enemyPanel;
 
     // Fonts
     static Font titleFont = new Font("Times New Roman", Font.PLAIN, 120);
@@ -17,7 +20,7 @@ public class Screens {
     HashMap<String, Screen> screenMap = new HashMap<>();
     Panel locationName, enemyName, playerHealth,inspectInfoPanel;
 
-    Screens(Container con, Window gameWindow) {
+    Screens(Container con, Window gameWindow) throws IOException {
 
         this.con = con;
 
@@ -76,7 +79,8 @@ public class Screens {
 
         // Rooms Screen
         Screen roomScreen = new Screen(gameWindow);
-        Panel locationPanel = new Panel(30, 50, 730, 350, Color.blue);
+        locationPanel = new Panel(30, 50, 730, 350, Color.blue);
+        locationPanel.getJPanel().setLayout(new BorderLayout());
         Button inspectButton = new Button("inspect button", 55, 420, 360, 200, "Inspect", Color.black, Color.white,
                 normalFont, this, gameWindow);
         Button moveButton = new Button("move button", 425, 420, 300, 200, "Move", Color.black, Color.white,
@@ -95,7 +99,8 @@ public class Screens {
         screenMap.put("Room", roomScreen);
         //Fight Screen
         Screen fightScreen = new Screen(gameWindow);
-        Panel enemyPanel = new Panel(30, 70, 730, 330, Color.blue);
+        enemyPanel = new Panel(30, 70, 730, 330, Color.black);
+        enemyPanel.getJPanel().setLayout(new BorderLayout());
         Button attackButton = new Button("attack button", 55, 445, 360, 200, "Attack", Color.black, Color.white,
                 normalFont, this, gameWindow);
         Button defendButton = new Button("defend button", 425, 445, 300, 200, "Defend", Color.black, Color.white,
@@ -199,7 +204,15 @@ public class Screens {
     public void setInspectInfoPanelText(String text) {
         inspectInfoPanel.setLabel(text);
     }
+
+    public Panel getLocationPanel() {
+        return locationPanel;
+    }
+    public Panel getEnemyPanel() {
+        return enemyPanel;
+    }
 }
+
 
 /*
  * -Creating a New Screen (Panels and Buttons Included)-

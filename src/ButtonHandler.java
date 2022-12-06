@@ -1,4 +1,6 @@
 import javax.sound.sampled.*;
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -10,12 +12,9 @@ public class ButtonHandler implements ActionListener {
     Window gameWindow;
     String buttonName;
     boolean defending = false;
+    Graphics g;
     File music;
     Clip musicClip;
-
-    File musicFile;
-    AudioInputStream musicStream;
-
 
     ButtonHandler(String buttonName, Screens screenSet, Window gameWindow) {
         this.buttonName = buttonName;
@@ -24,10 +23,14 @@ public class ButtonHandler implements ActionListener {
     }
 
     public void actionPerformed(ActionEvent event) {
-        chooseAction();
+        try {
+            chooseAction();
+        } catch (UnsupportedAudioFileException | LineUnavailableException | IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    public void chooseAction() {
+    public void chooseAction() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         switch (this.buttonName) {
             case "start button" -> startGame();
             case "test button" -> testGame();
@@ -54,6 +57,7 @@ public class ButtonHandler implements ActionListener {
         screenSet.getScreen("Title").setInvisible();
         screenSet.changeLocationName("Entrance");
         screenSet.getScreen("Room").setVisible();
+        updatePictureImage();
 
         refresh();
 
@@ -63,10 +67,11 @@ public class ButtonHandler implements ActionListener {
     public void testGame() {
         screenSet.getScreen("Title").setInvisible();
         screenSet.getScreen("Room").setVisible();
+        updatePictureImage();
         refresh();
     }
 
-    public void checkForEnemy() {
+    public void checkForEnemy() throws UnsupportedAudioFileException, LineUnavailableException, IOException {
         if (screenSet.getCurrentRoom().getEnemy() != null) {
             startFight();
         } else {
@@ -77,6 +82,7 @@ public class ButtonHandler implements ActionListener {
     public void goBack() {
         screenSet.getScreen("Inspect").setInvisible();
         screenSet.getScreen("Room").setVisible();
+        updatePictureImage();
         refresh();
     }
 
@@ -88,14 +94,20 @@ public class ButtonHandler implements ActionListener {
         refresh();
     }
 
-    public void startFight() {
+    public void startFight() throws UnsupportedAudioFileException, IOException, LineUnavailableException {
+        music = screenSet.getCurrentRoom().getMusic();
+        musicClip = AudioSystem.getClip();
+        musicClip.open(AudioSystem.getAudioInputStream(music));
+        musicClip.start();
+
         Creature player = screenSet.objects.getPlayer();
         Creature enemy = screenSet.getCurrentRoom().getEnemy();
         screenSet.setPlayerHealth("Health : " + player.getCurrentHealth() + "/" + player.getHealth());
-        String enemyName = screenSet.getCurrentRoom().getEnemy().getName();
+        String enemyName = enemy.getName();
         screenSet.setEnemyName(enemyName);
         screenSet.getScreen("Room").setInvisible();
         screenSet.getScreen("Fight").setVisible();
+        updateEnemyImage();
         refresh();
         int playerSpeed = player.getSpeed();
         int enemySpeed = enemy.getSpeed();
@@ -116,6 +128,8 @@ public class ButtonHandler implements ActionListener {
             player.setCurrentHealth(player.getHealth());
             screenSet.getCurrentRoom().setEnemy(null);
             refresh();
+            stopMusic();
+
         } else {
             enemyTurn();
         }
@@ -184,26 +198,13 @@ public class ButtonHandler implements ActionListener {
             refresh();
             player.setCurrentHealth(player.getHealth());
             enemy.setCurrentHealth(enemy.getHealth());
-            if (clip != null) {
-                clip.stop();
-            }
-
+            stopMusic();
         }
 
     }
 
     public void openMap() {
-        try {
-            musicClip.stop();
-            musicStream.close();
-            musicClip.flush();
-            musicClip.close();
 
-        } catch (NullPointerException e) {
-            System.out.print("There is no music playing\n");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
         screenSet.getScreen("Room").setInvisible();
         screenSet.getScreen("Map").setVisible();
         refresh();
@@ -212,36 +213,15 @@ public class ButtonHandler implements ActionListener {
 
     public void changeLocation(int roomNumber) {
 
-
         screenSet.setCurrentRoom(screenSet.getObjects().getRoomArray()[roomNumber]);
         String locationName = screenSet.getCurrentRoom().getRoomName();
         screenSet.changeLocationName(locationName);
         screenSet.getScreen("Map").setInvisible();
         screenSet.getScreen("Room").setVisible();
+        updatePictureImage();
+
+
         refresh();
-
-        File music = screenSet.getCurrentRoom().getMusic();
-        {
-            try {
-                musicStream = AudioSystem.getAudioInputStream(music);
-            } catch (UnsupportedAudioFileException | IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        try {
-            musicClip = AudioSystem.getClip();
-        } catch (LineUnavailableException e) {
-            throw new RuntimeException(e);
-        }
-        try {
-            musicClip.flush();
-            musicClip.setFramePosition(0);
-            musicClip.open(musicStream);
-            musicClip.start();
-        } catch (LineUnavailableException | IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     // Refreshing the Screen after any changes
@@ -249,6 +229,31 @@ public class ButtonHandler implements ActionListener {
         gameWindow.getJFrame().invalidate();
         gameWindow.getJFrame().validate();
         gameWindow.getJFrame().repaint();
+    }
+
+    public void stopMusic() {
+        try {
+            musicClip.stop();
+            System.out.println(musicClip.isRunning());
+        } catch (NullPointerException e) {
+            System.out.println("There is no music playing");
+        }
+    }
+    public void updatePictureImage(){
+        if (screenSet.getCurrentRoom().getImage()!= null) {
+            screenSet.getLocationPanel().getJPanel().removeAll();
+            JLabel picLabel = new JLabel(new ImageIcon(screenSet.getCurrentRoom().getImage()));
+            picLabel.setBounds(new Rectangle(730, 350));
+            screenSet.getLocationPanel().getJPanel().add(picLabel,BorderLayout.CENTER);
+        }
+    }
+    public void updateEnemyImage(){
+        if(screenSet.getCurrentRoom().getEnemy() != null &&screenSet.getCurrentRoom().getEnemy().getImage()!= null){
+            screenSet.getEnemyPanel().getJPanel().removeAll();
+            JLabel picLabel = new JLabel(new ImageIcon(screenSet.getCurrentRoom().getEnemy().getImage()));
+            picLabel.setBounds(new Rectangle(730, 350));
+            screenSet.getEnemyPanel().getJPanel().add(picLabel,BorderLayout.CENTER);
+        }
     }
 }
 /*

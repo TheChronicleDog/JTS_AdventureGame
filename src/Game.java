@@ -1,8 +1,9 @@
 import java.awt.*;
+import java.io.IOException;
 import java.util.HashMap;
 import javax.swing.*;
 public class Game {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
 
 
         Window gameWindow = new Window(1400, 1050, JFrame.EXIT_ON_CLOSE, Color.black);

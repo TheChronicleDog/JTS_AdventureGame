@@ -1,15 +1,19 @@
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 import java.util.Random;
 
 public class Creature {
     int maxHealth,currentHealth, attack, defense, speed, luck;
-
+    BufferedImage image;
     String name;
 
-    Creature() {
-        this("N/A", 1, 1, 1, 1, 1);
+    Creature() throws IOException {
+        this("N/A", 1, 1, 1, 1, 1,null);
     }
 
-    Creature(String n, int h, int a, int d, int s, int l) {
+    Creature(String n, int h, int a, int d, int s, int l, File imageFile) throws IOException {
         setName(n);
         setHealth(h);
         setAttackMax(a);
@@ -17,6 +21,9 @@ public class Creature {
         setSpeed(s);
         setLuck(l);
         currentHealth = maxHealth;
+        if (imageFile != null) {
+            image = ImageIO.read(imageFile);
+        }
     }
     public int getCurrentHealth() {
         return currentHealth;
@@ -126,5 +133,9 @@ public class Creature {
             setLuck(getLuck() - equipmentItem.getLuck());
             equipmentItem.setEquipStatus(false);
         }
+    }
+
+    public BufferedImage getImage() {
+        return image;
     }
 }

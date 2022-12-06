@@ -1,4 +1,7 @@
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 
 public class Room {
     String roomName;
@@ -6,15 +9,19 @@ public class Room {
     Item item;
     String information;
     File music;
-    Room(){
-        this("empty",null,null,"empty",null);
+    BufferedImage image;
+    Room() throws IOException {
+        this("empty",null,null,"empty",null,null);
     }
-    Room(String roomName,Creature enemy, Item item,String information, File music){
+    Room(String roomName,Creature enemy, Item item,String information, File music,File imageFile) throws IOException {
         this.roomName = roomName;
         this.enemy = enemy;
         this.item = item;
         this.information = information;
         this.music = music;
+        if(imageFile != null) {
+            image = ImageIO.read(imageFile);
+        }
     }
 
     public void setEnemy(Creature enemy) {
@@ -48,6 +55,11 @@ public class Room {
     public File getMusic() {
         return music;
     }
+
+    public BufferedImage getImage() {
+        return image;
+    }
 }
+
 
 
