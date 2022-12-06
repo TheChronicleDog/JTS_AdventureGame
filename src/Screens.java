@@ -53,7 +53,7 @@ public class Screens {
         // Win Screen
         Screen winScreen = new Screen(gameWindow);
 
-        Panel winPanel = new Panel(100, 100, 600, 150, Color.black, Color.white, "Game Over\nYou Win!", titleFont);
+        Panel winPanel = new Panel(100, 100, 600, 150, Color.black, Color.white, "Game Over", titleFont);
 
         winScreen.add(winPanel);
 
